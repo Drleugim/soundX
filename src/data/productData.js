@@ -1,0 +1,58 @@
+import { v4 as uuidv4 } from 'uuid';
+
+export const productData = [
+  {
+    _id:uuidv4(),
+    name:'Piano',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'78000',
+    sellPrice:'',
+    picture:'',
+    quantity:'3',
+  },
+  {
+    _id:uuidv4(),
+    name:'Violin',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'10000',
+    sellPrice:'75000',
+    picture:'',
+    quantity:'1',
+  },
+  {
+    _id:uuidv4(),
+    name:'Guitarra acustica',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'',
+    sellPrice:'45000',
+    picture:'',
+    quantity:'6',
+  },
+  {
+    _id:uuidv4(),
+    name:'Guitarra electrica',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'40000',
+    sellPrice:'',
+    picture:'',
+    quantity:'2',
+  },
+  {
+    _id:uuidv4(),
+    name:'Violin',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'10000',
+    sellPrice:'80000',
+    picture:'',
+    quantity:'5',
+  },
+  {
+    _id:uuidv4(),
+    name:'Equipo de sonido',
+    description:'Lorem ipsum dolor sit amet consectetur adipiscing elit enim taciti ..',
+    rentPrice:'90000',
+    sellPrice:'',
+    picture:'',
+    quantity:'1',
+  },
+]
