@@ -1,25 +1,42 @@
-import logo from './logo.svg';
+import React from 'react'
+import LoginForm from './components/LoginForm'
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+
+  state={
+    email:'',
+    password: '',
+  }
+
+  handleSubmit = e =>{
+    e.preventDefault()
+    
+  }
+
+
+  handleChange = e =>{
+    const {name, value} = e.target
+    this.setState({
+      [name] : value,
+    })
+
+  }
+
+  render(){
+    const {email, password} = this.state
+      return (
+        <div className="App">
+          <LoginForm
+            email={email}
+            password={password}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
+          >
+          </LoginForm>
+        </div>
+      );
+  }
 }
 
 export default App;
