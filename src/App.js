@@ -21,7 +21,6 @@ class App extends React.Component{
       [name] : value,
     })
 
-//  console.log(value)
   }
 
   render(){
