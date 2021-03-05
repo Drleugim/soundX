@@ -1,4 +1,4 @@
-function LoginForm({email, password, handleSubmit, handleChange}){
+function LoginForm({email, password, handleSubmit, handleChange, handleNewUser}){
 
     return(
 
@@ -25,12 +25,12 @@ function LoginForm({email, password, handleSubmit, handleChange}){
                 Sign In
             </button>
              <button 
+                onClick={handleNewUser}
                 type="button"
              >
                 Create User
             </button>
             <a href="#">Forgot Password?</a>
-
         </form>
     )
 }

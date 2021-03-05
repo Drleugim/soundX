@@ -1,42 +1,24 @@
+import {
+  BrowserRouter as  Router,
+  Route,
+  Switch,
+} from 'react-router-dom'
+import Welcome from './pages/Welcome'
+import UserCreated from './pages/UserCreated'
 import React from 'react'
-import LoginForm from './components/LoginForm'
+import Login from './pages/Login'
 import './App.css';
 
-class App extends React.Component{
-
-  state={
-    email:'',
-    password: '',
-  }
-
-  handleSubmit = e =>{
-    e.preventDefault()
-    
-  }
-
-
-  handleChange = e =>{
-    const {name, value} = e.target
-    this.setState({
-      [name] : value,
-    })
-
-  }
-
-  render(){
-    const {email, password} = this.state
-      return (
-        <div className="App">
-          <LoginForm
-            email={email}
-            password={password}
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-          >
-          </LoginForm>
-        </div>
-      );
-  }
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={Login}/>
+        <Route exact path="/welcome/:id" component={Welcome}/>
+        <Route exact path="/newuser/:id" component={UserCreated}/>
+      </Switch>
+    </Router>
+  );
 }
 
 export default App;
