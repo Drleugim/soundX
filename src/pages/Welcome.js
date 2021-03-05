@@ -1,12 +1,10 @@
-function Welcome (props) {
+import React from 'react'
+function Welcome(props) {
     return(
-        <main>
-            <a href="/">
-                Logout
-            </a>
+        <section>
+            <a href="/">Logout</a>
             <h1>Welcome {props.match.params.id}</h1>
-        </main>
-   )
+        </section>
+    )
 }
-
-export default Welcome 
+export default Welcome

@@ -29,12 +29,6 @@ class Login extends React.Component{
     }
   }
 
-  handleNewUser = e => {
-    e.preventDefault()
-    const { email } = this.state
-    this.props.history.push(`/newuser/${email}`)
-  }
-
   handleChange = e =>{
     const { name, value } = e.target
     this.setState({
@@ -47,11 +41,10 @@ class Login extends React.Component{
     return(
       <div className="App">
           <LoginForm
-          email={email}
-          password={password}
-          handleSubmit={this.handleSubmit}
-          handleChange={this.handleChange}
-          handleNewUser={this.handleNewUser}
+            email={email}
+            password={password}
+            handleSubmit={this.handleSubmit}
+            handleChange={this.handleChange}
           />
           {userNotFound && <h2>Wrong email or password, please try again</h2>}
       </div>
