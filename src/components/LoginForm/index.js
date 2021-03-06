@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom'
 
-function LoginForm({email, password, handleSubmit, handleChange}){
+function LoginForm({ email, password, handleSubmit, handleChange}){
 
     return(
         <form onSubmit={handleSubmit}>
@@ -25,7 +25,11 @@ function LoginForm({email, password, handleSubmit, handleChange}){
             >
                 Sign In
             </button>
-            <Link to={`/welcome/${email}`}>Create user </Link>
+            <Link to={{
+                pathname: "/welcome/newUser",
+                state: {email: email},
+            }}
+            >Create user </Link>
             <a href="#">Forgot Password?</a>
         </form>
     )
