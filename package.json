@@ -10,6 +10,7 @@
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "styled-components": "^5.2.1",
     "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
@@ -36,5 +37,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/Drleugim/soundX.git",
+  "author": "dembowmaker1204 <ptb1204@hotmail.com>",
+  "license": "MIT"
 }
