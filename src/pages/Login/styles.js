@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const WrongWarning = styled.h2`
-    color: green;
+export const WrongWarning = styled.p`
+    color: red;
     font-size: 28px;
 `

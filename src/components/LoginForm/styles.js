@@ -27,6 +27,47 @@ export const MainStyle = styled.main`
     box-shadow: 5px 5px lightgreen;
     margin-top: 12rem;
     background-color: white;
+
+    
+    & form{
+        width: 300px;
+        height: 300px;
+    }
+
+    & form section{
+        margin-bottom: 1em;
+    }
+
+    & form section .userPass{
+        display: flex;
+        justify-content: space-evenly;
+        margin-top: 1em;
+    }
+
+
+    & form section .userPass a{
+        text-decoration: none;
+    }
+
+    & form section button{
+        font-size: 1em;
+        width: 8rem;
+        height: 2.5rem;
+        background-color: green;
+        color: white;
+        margin: 0 auto;
+        border: 2px solid white;
+        border-radius: 6px;
+    }
+
+    & form section label[for=email]{
+        margin-right: 36px;
+    }
+
+    & form section label[for=password]{
+        margin-right: 14px;
+    }
+
         
 `
 
@@ -36,50 +77,4 @@ export const LogoStyle = styled.img.attrs(props => ({
     width: 13rem;
     height: 12rem;
     src: url(${logo})
-`
-
-
-export const FormStyle = styled.form`
-    width: 300px;
-    height: 300px;
-    
-`
-
-export const SectionStyle = styled.section`
-    margin-bottom: 1em;
-`
-
-export const SectionUserPass = styled.section`
-    display: flex;
-    justify-content: space-evenly;
-    margin-top: 1em;
-
-    & a{
-        text-decoration: none;
-    }
-`
-
-
-export const InputStyle = styled.input`
-
-`
-
-export const LabelEmailStyle = styled.label`
-    margin-right: 36px;
-`
-
-export const LabelPasswordStyle = styled.label`
-    margin-right: 14px;
-`
-
-export const ButtonStyle = styled.button`
-    font-size: 1em;
-    width: 8rem;
-    height: 2.5rem;
-    background-color: green;
-    color: white;
-    margin: 0 auto;
-    border: 2px solid white;
-    border-radius: 6px;
-    
 `
