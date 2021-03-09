@@ -1,13 +1,15 @@
 import React from 'react'
+import {SectionWelcome} from './styles'
+
 
 function Welcome(props) {
     const user = props.location.state ? props.location.state.email : props.match.params.id
 
     return(
-        <section>
+        <SectionWelcome>
             <a href="/">Logout</a>
             <h1>Welcome {user}</h1>
-        </section>
+        </SectionWelcome>
     )
 }
 export default Welcome

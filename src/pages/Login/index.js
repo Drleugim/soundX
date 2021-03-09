@@ -1,5 +1,6 @@
-import { userData } from '../data/userData'
-import LoginForm from '../components/LoginForm'
+import { userData } from '../../data/userData'
+import LoginForm from '../../components/LoginForm'
+import {WrongWarning} from './styles'
 import React from 'react'
 
 
@@ -36,6 +37,7 @@ class Login extends React.Component{
     })
   }
 
+
   render(){
     const { email, password, userNotFound } = this.state
     return(
@@ -46,7 +48,7 @@ class Login extends React.Component{
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
           />
-          {userNotFound && <h2>Wrong email or password, please try again</h2>}
+          {userNotFound && <WrongWarning>Wrong email or password, please try again</WrongWarning>}
       </div>
     )
   }
