@@ -3,21 +3,17 @@ import logo from '../../media/pictures/SNX-logo.png'
 import background from '../../media/pictures/bg-photo.jpg'
 
 export const BackgroundSection = styled.div`
-    min-height: 100%;
-    min-width: 1024px;
-     
-    width: 100%;
-    height: auto;
-    top: 0;
-    left: 0;
+    height: 100vh;
     background-image: url(${background});
+    display: flex;
+    align-items: center; 
 
 `
 
 
 export const MainStyle = styled.main`
     display: flex;
-    align-items: center;
+    align-items: center; 
     flex-flow: column;
     width: 400px;
     height: 400px;
@@ -25,8 +21,8 @@ export const MainStyle = styled.main`
     border: 2px solid #000;
     border-radius: 10px;
     box-shadow: 5px 5px lightgreen;
-    margin-top: 12rem;
     background-color: white;
+    
 
     
     & form{
