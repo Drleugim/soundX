@@ -1,5 +1,8 @@
 import React from 'react'
-import {SectionWelcome} from './styles'
+import {
+    SectionWelcome,
+    SectionBRPub, 
+} from './styles'
 
 
 function Welcome(props) {
@@ -7,8 +10,12 @@ function Welcome(props) {
 
     return(
         <SectionWelcome>
-            <a href="/">Logout</a>
+            <a href="/" className="Logout">Logout</a>
             <h1>Welcome {user}</h1>
+            <SectionBRPub>
+                <a href="/buy-rent" className="BuyRent">Buy/Rent</a>
+                <a href="/publish" className="Publish">Publish</a>
+            </SectionBRPub>
         </SectionWelcome>
     )
 }
