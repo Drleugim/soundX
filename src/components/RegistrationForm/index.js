@@ -5,7 +5,7 @@ import {
     BackgroundSection,
 } from './styles'
 
-function LoginForm({ email, password, handleSubmit, handleChange }){
+function RegistrationForm({ email, password, confirmedPassword, handleSubmit, handleChange}){
 
     return(
         <BackgroundSection>
@@ -35,13 +35,23 @@ function LoginForm({ email, password, handleSubmit, handleChange }){
                         />
                     </section>
                     <section>
+                        <label htmlFor="confirmedPassword">Confirm Password:</label>
+                        <input
+                            type="password"
+                            id="confirmedPassword"
+                            name="confirmedPassword"
+                            value={confirmedPassword}
+                            onChange={handleChange}
+                        />
+                    </section>
+                    <section>
                         <button
                             type="submit"
                         >
-                            Sign In 
+                            Register 
                         </button>
                         <section className="userPass">
-                            <a>Dont have an account?  <Link to="/signup">Register</Link></a>
+                            <a>Already have an account?  <Link to="/">Login</Link></a>
                             <a href="#">Forgot Password?</a>
                         </section>
                     </section>
@@ -51,4 +61,4 @@ function LoginForm({ email, password, handleSubmit, handleChange }){
     )
 }
 
-export default LoginForm;
+export default RegistrationForm;
