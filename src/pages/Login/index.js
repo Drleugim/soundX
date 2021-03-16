@@ -1,6 +1,4 @@
-// import { Link } from 'react-router-dom'
 import LoginForm from '../../components/LoginForm'
-// import { WrongWarning } from './styles'
 import React from 'react'
 import axios from 'axios'
 
