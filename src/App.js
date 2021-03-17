@@ -14,11 +14,6 @@ import './App.css';
 function App() {
   return (
     <Router>
-      {/* <nav>
-          <Link to="/">Home</Link>
-          <Link to="/signup">Signup</Link>
-          <Link to="/">Login</Link>
-      </nav> */}
       <Switch>
         <Route exact path="/" component={Login}/>
         <Route exact path="/signup" component={Signup}/>
