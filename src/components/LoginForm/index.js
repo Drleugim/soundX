@@ -1,8 +1,8 @@
 import {Link} from 'react-router-dom'
 import {
-    MainStyle,
-    LogoStyle, 
-    BackgroundSection,
+  MainStyle,
+  LogoStyle, 
+  BackgroundSection,
 } from './styles'
 
 function LoginForm({ email, password, handleSubmit, handleChange }){
