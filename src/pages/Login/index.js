@@ -1,29 +1,33 @@
-import { userData } from '../../data/userData'
 import LoginForm from '../../components/LoginForm'
-import {WrongWarning} from './styles'
 import React from 'react'
+import axios from 'axios'
 
 
 class Login extends React.Component{
   state={
-    email:'',
+    email: '',
     password: '',
-    users: userData,
-    userNotFound: false,
+    showUserWarning: false,
   }
 
-  handleSubmit = e =>{
+  handleSubmit = async e =>{
     e.preventDefault()
-    
-    const { email, password, users } = this.state
-    
-    const [ userAccess ] = users.filter( user => user.email === email && user.password === password )  
 
-    if(userAccess){
-      this.props.history.push(`/welcome/${userAccess.name}`)
-    }else{
+    try {     
+      const { data } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/signin',
+        data: this.state
+      })
+
+      localStorage.setItem('user', data.name)
+      this.props.history.push('/welcome')
+
+    } catch(error) {
       this.setState({
-        userNotFound : true,
+        error: error,
+        showUserWarning: true,
         email:'',
         password: '',
       })
@@ -33,13 +37,13 @@ class Login extends React.Component{
   handleChange = e =>{
     const { name, value } = e.target
     this.setState({
-      [name] : value,
+      [name]: value,
     })
   }
 
 
   render(){
-    const { email, password, userNotFound } = this.state
+    const { email, password, showUserWarning  } = this.state
     return(
       <div className="App">
           <LoginForm
@@ -48,7 +52,7 @@ class Login extends React.Component{
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
           />
-          {userNotFound && <WrongWarning>Wrong email or password, please try again</WrongWarning>}
+          {showUserWarning && <h2>Wrong email or password, please try again</h2>}
       </div>
     )
   }
