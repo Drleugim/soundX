@@ -13,6 +13,10 @@ class Login extends React.Component{
   handleSubmit = async e =>{
     e.preventDefault()
 
+    this.setState({
+      showUserWarning:false,
+    })
+
     try {     
       const { data } = await axios({
         method: 'POST',
@@ -25,8 +29,8 @@ class Login extends React.Component{
       this.props.history.push('/welcome')
 
     } catch(error) {
+      console.log(error)
       this.setState({
-        error: error,
         showUserWarning: true,
         email:'',
         password: '',
