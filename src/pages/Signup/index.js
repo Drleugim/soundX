@@ -15,6 +15,12 @@ class Signup extends React.Component{
   handleSubmit = async e =>{
     e.preventDefault()
     const { password, confirmedPassword } = this.state
+
+    this.setState({
+      showPasswordWarning:false,
+      showUserWarning:false,
+    })
+
     if( password === confirmedPassword ){
       try {
         const { data } = await axios({
@@ -29,17 +35,20 @@ class Signup extends React.Component{
         
       } catch(error) {
           this.setState({
-            error: error,
+          showUserWarning : true,
+          email:'',
+          password: '',
+          confirmedPassword:''
           })
         }
-  } else{
+    } else{
       this.setState({
           showPasswordWarning : true,
           password: '',
           confirmedPassword:''
         })
     } 
-}
+  }
 
   handleChange = e =>{
     const { name, value } = e.target

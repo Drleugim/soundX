@@ -41,7 +41,7 @@ function LoginForm({ email, password, handleSubmit, handleChange }){
 							Sign In
 						</button>
 						<section className="userPass">
-							<a>Dont have an account?  <Link to="/signup">Register</Link></a>
+							<p>Dont have an account?  <Link to="/signup">Register</Link></p>
 							<a href="#">Forgot Password?</a>
 						</section>
 					</section>
