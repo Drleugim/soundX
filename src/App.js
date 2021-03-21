@@ -10,27 +10,26 @@ import Login from './pages/Login/'
 import Signup from './pages/Signup/'
 import './App.css';
 
-function PrivateRouteWelcome(props) {
+
+function PrivateRoute(props) {
   const user = localStorage.getItem('user')
+  const { path } = props 
 
-  if(!user) return <Redirect to="/" />
+  if(!user && path!=="/" && path!=="/signup") return <Redirect to="/"/>
+  
+  if(user){
+    if(path==="/" || path==="/signup") return <Redirect to="/welcome"/>
+  } 
   return <Route {...props} />
-}
-
-function PrivateRouteLogin(props) {
-  const user = localStorage.getItem('user')
-
-  if(user) return <Redirect to="/welcome" />
-  return <Route {...props} />
-}
+} 
 
 function App() {
   return (
     <Router>
       <Switch>
-        <PrivateRouteLogin exact path="/" component={Login}/>
-        <PrivateRouteLogin exact path="/signup" component={Signup}/>
-        <PrivateRouteWelcome path= "/welcome" component={Welcome}/>
+        <PrivateRoute exact path="/" component={Login}/>
+        <PrivateRoute exact path="/signup" component={Signup}/>
+        <PrivateRoute exact path="/welcome" component={Welcome}/>
       </Switch>
     </Router>
   )

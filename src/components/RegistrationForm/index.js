@@ -51,7 +51,7 @@ function RegistrationForm({ email, password, confirmedPassword, handleSubmit, ha
               Register
             </button>
             <section className="userPass">
-              <a>Already have an account?  <Link to="/">Login</Link></a>
+              <p>Already have an account?  <Link to="/">Login</Link></p>
               <a href="#">Forgot Password?</a>
             </section>
           </section>
