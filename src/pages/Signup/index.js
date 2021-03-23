@@ -3,8 +3,7 @@ import { useState } from 'react'
 import { useHistory } from "react-router-dom"
 import axios from 'axios'
 function Signup(){
-    const [userSignUp, setUserSignUp] = useState({ email : '', password : ''})
-    const [confirmedPassword, setConfirmedPassword] = useState('')
+    const [userSignUp, setUserSignUp] = useState({ email : '', password : '', confirmedPassword: ''})
 
     const [showPasswordWarning, setShowPasswordWarning] = useState(false)
     const [showUserWarning, setShowUserWarning] = useState(false)
@@ -18,24 +17,25 @@ function Signup(){
         setShowPasswordWarning(false)
         setShowUserWarning(false)
 
-        if( userSignUp.password === confirmedPassword ){
+        if( userSignUp.password === userSignUp.confirmedPassword ){
 
-            axios.post(SIGNUP_ENDPOINT, userSignUp)
+            const { email, password } = userSignUp
+            const user = { email, password }
+  
+            axios.post(SIGNUP_ENDPOINT, user)
             .then( (res) => {
                 const { email } = res.data
                 localStorage.setItem('user', email)
                 history.push('/welcome')
             })
             .catch(function (error) {
-                setUserSignUp({ email : '', password : ''})
-                setConfirmedPassword('')
+                setUserSignUp({ email : '', password : '', confirmedPassword: ''})
                 setShowUserWarning(true)
 
             })
         }else{
             setShowPasswordWarning(true)
-            setUserSignUp({ email : '', password : ''})
-            setConfirmedPassword('')
+            setUserSignUp({ email : '', password : '', confirmedPassword: ''})
         }
     }
 
@@ -45,20 +45,14 @@ function Signup(){
         setUserSignUp({...userSignUp, [name] : value})
     }
 
-    function handleConfirmPassword (e){
-        const { value } = e.target
-        setConfirmedPassword(value)
-    }
-
     return(
      <div className="App"> 
           <RegistrationForm
             email={userSignUp.email}
             password={userSignUp.password}
-            confirmedPassword={confirmedPassword}
+            confirmedPassword={userSignUp.confirmedPassword}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
-            handleConfirmPassword={handleConfirmPassword}
           />
           {showPasswordWarning && <p>Please make sure your passwords match</p>}
           {showUserWarning && <p>Another user with this email already exist!</p>}
