@@ -1,65 +1,51 @@
 import LoginForm from '../../components/LoginForm'
-import React from 'react'
+import { useState } from 'react'
+import { useHistory } from "react-router-dom"
 import axios from 'axios'
 
 
-class Login extends React.Component{
-  state={
-    email: '',
-    password: '',
-    showUserWarning: false,
-  }
+function Login(){
 
-  handleSubmit = async e =>{
-    e.preventDefault()
+   const [userSignIn, setUserSignIn] = useState({ email : '', password : ''})
+   const [showUserWarning, setShowUserWarning] = useState(false)
 
-    this.setState({
-      showUserWarning:false,
-    })
+   let history = useHistory()
 
-    try {     
-      const { data } = await axios({
-        method: 'POST',
-        baseURL: process.env.REACT_APP_SERVER_URL,
-        url: '/users/signin',
-        data: this.state
-      })
+   const SIGNIN_ENDPOINT = process.env.REACT_APP_SERVER_URL+'/users/signin'
+ 
 
-      localStorage.setItem('user', data.name)
-      this.props.history.push('/welcome')
+   function handleSubmit(e){
+        e.preventDefault()
 
-    } catch(error) {
-      console.log(error)
-      this.setState({
-        showUserWarning: true,
-        email:'',
-        password: '',
-      })
+        axios.post(SIGNIN_ENDPOINT, userSignIn)
+          .then( (res) => {
+              const { name } = res.data
+              localStorage.setItem('user', name)
+              history.push('/welcome')
+          })
+          .catch(function (error) {
+              console.log(error)
+              setShowUserWarning(true)
+              setUserSignIn({ email : '', password : ''})
+          })
+   } 
+
+    function handleChange(e){
+        const { name, value } = e.target
+        setUserSignIn({...userSignIn, [name] : value})
     }
-  }
 
-  handleChange = e =>{
-    const { name, value } = e.target
-    this.setState({
-      [name]: value,
-    })
-  }
-
-
-  render(){
-    const { email, password, showUserWarning  } = this.state
     return(
       <div className="App">
           <LoginForm
-            email={email}
-            password={password}
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
+            email={userSignIn.email}
+            password={userSignIn.password}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
           />
           {showUserWarning && <h2>Wrong email or password, please try again</h2>}
       </div>
     )
-  }
 }
 
 export default Login

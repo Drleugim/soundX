@@ -5,7 +5,14 @@ import {
   BackgroundSection,
 } from './styles'
 
-function RegistrationForm({ email, password, confirmedPassword, handleSubmit, handleChange}){
+function RegistrationForm({ 
+                            email,
+                            password,
+                            confirmedPassword,
+                            handleSubmit, 
+                            handleChange,
+                            handleConfirmPassword,
+                          }){
 
   return (
     <BackgroundSection>
@@ -41,7 +48,7 @@ function RegistrationForm({ email, password, confirmedPassword, handleSubmit, ha
               id="confirmedPassword"
               name="confirmedPassword"
               value={confirmedPassword}
-              onChange={handleChange}
+              onChange={handleConfirmPassword}
             />
           </section>
           <section>
