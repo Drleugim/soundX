@@ -5,7 +5,7 @@ import {
   BackgroundSection,
 } from './styles'
 
-function RegistrationForm({ email, password, confirmedPassword, handleSubmit, handleChange}){
+function RegistrationForm({ email, password, confirmedPassword, handleSubmit, handleChange }){
 
   return (
     <BackgroundSection>

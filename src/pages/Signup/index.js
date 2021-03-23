@@ -1,84 +1,63 @@
 import RegistrationForm from '../../components/RegistrationForm'
-import React from 'react'
+import { useState } from 'react'
+import { useHistory } from "react-router-dom"
 import axios from 'axios'
+function Signup(){
+    const [userSignUp, setUserSignUp] = useState({ email : '', password : '', confirmedPassword: ''})
 
+    const [showPasswordWarning, setShowPasswordWarning] = useState(false)
+    const [showUserWarning, setShowUserWarning] = useState(false)
 
-class Signup extends React.Component{
-  state={
-    email: '',
-    password: '',
-    confirmedPassword:'',
-    showPasswordWarning:false,
-    showUserWarning:false,
-  }
+    const SIGNUP_ENDPOINT=process.env.REACT_APP_SERVER_URL+'/users/signup'
 
-  handleSubmit = async e =>{
-    e.preventDefault()
-    const { password, confirmedPassword } = this.state
+    let history = useHistory()
 
-    this.setState({
-      showPasswordWarning:false,
-      showUserWarning:false,
-    })
+    function handleSubmit (e){
+        e.preventDefault()
+        setShowPasswordWarning(false)
+        setShowUserWarning(false)
 
-    if( password === confirmedPassword ){
-      try {
-        const { data } = await axios({
-          method: 'POST',
-          baseURL: process.env.REACT_APP_SERVER_URL,
-          url: '/users/signup',
-          data: this.state
-        })
+        if( userSignUp.password === userSignUp.confirmedPassword ){
 
-        localStorage.setItem('user', data.email)
-        this.props.history.push('/welcome')
-        
-      } catch(error) {
-          this.setState({
-          showUserWarning : true,
-          email:'',
-          password: '',
-          confirmedPassword:''
-          })
+            const { email, password } = userSignUp
+            const user = { email, password }
+  
+            axios.post(SIGNUP_ENDPOINT, user)
+            .then( (res) => {
+                const { email } = res.data
+                localStorage.setItem('user', email)
+                history.push('/welcome')
+            })
+            .catch(function (error) {
+                setUserSignUp({ email : '', password : '', confirmedPassword: ''})
+                setShowUserWarning(true)
+
+            })
+        }else{
+            setShowPasswordWarning(true)
+            setUserSignUp({ email : '', password : '', confirmedPassword: ''})
         }
-    } else{
-      this.setState({
-          showPasswordWarning : true,
-          password: '',
-          confirmedPassword:''
-        })
-    } 
-  }
-
-  handleChange = e =>{
-    const { name, value } = e.target
-    this.setState({
-      [name] : value,
-    })
-  }
+    }
 
 
-  render(){
-    const { 
-      email, 
-      password, 
-      confirmedPassword, 
-      showPasswordWarning, 
-      showUserWarning } = this.state
+    function handleChange (e){
+        const { name, value } = e.target
+        setUserSignUp({...userSignUp, [name] : value})
+    }
+
     return(
-      <div className="App"> 
+     <div className="App"> 
           <RegistrationForm
-            email={email}
-            password={password}
-            confirmedPassword={confirmedPassword}
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
+            email={userSignUp.email}
+            password={userSignUp.password}
+            confirmedPassword={userSignUp.confirmedPassword}
+            handleSubmit={handleSubmit}
+            handleChange={handleChange}
           />
           {showPasswordWarning && <p>Please make sure your passwords match</p>}
           {showUserWarning && <p>Another user with this email already exist!</p>}
       </div>
     )
-  }
 }
 
 export default Signup
