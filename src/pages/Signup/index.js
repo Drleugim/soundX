@@ -27,7 +27,6 @@ function Signup(){
                 history.push('/welcome')
             })
             .catch(function (error) {
-                console.log(error)
                 setUserSignUp({ email : '', password : ''})
                 setConfirmedPassword('')
                 setShowUserWarning(true)

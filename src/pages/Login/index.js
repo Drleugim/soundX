@@ -24,7 +24,6 @@ function Login(){
               history.push('/welcome')
           })
           .catch(function (error) {
-              console.log(error)
               setShowUserWarning(true)
               setUserSignIn({ email : '', password : ''})
           })
