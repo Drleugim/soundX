@@ -1,48 +1,47 @@
 import LoginForm from '../../components/LoginForm'
-import { useState } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from "react-router-dom"
-import axios from 'axios'
-
+import { useSelector, useDispatch } from 'react-redux'
+import { userLogin, updateUserData, toggleUserWarning } from '../../store/userReducer'
 
 function Login(){
+  const { email, password, userWarning, userData } = useSelector (({ userReducer })=>({
+    email: userReducer.email,
+    password: userReducer.password,
+    userWarning: userReducer.userWarning,
+    userData: userReducer.userData,
+  }))
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-   const [userSignIn, setUserSignIn] = useState({ email : '', password : ''})
-   const [showUserWarning, setShowUserWarning] = useState(false)
+  function handleChange(e) {
+    const { name, value } = e.target
+    const data = { name, value }
+    dispatch(updateUserData(data))
+  }
 
-   let history = useHistory()
-
-   const SIGNIN_ENDPOINT = process.env.REACT_APP_SERVER_URL+'/users/signin'
- 
-
-   function handleSubmit(e){
-        e.preventDefault()
-
-        axios.post(SIGNIN_ENDPOINT, userSignIn)
-          .then( (res) => {
-              const { name } = res.data
-              localStorage.setItem('user', name)
-              history.push('/welcome')
-          })
-          .catch(function (error) {
-              setShowUserWarning(true)
-              setUserSignIn({ email : '', password : ''})
-          })
-   } 
-
-    function handleChange(e){
-        const { name, value } = e.target
-        setUserSignIn({...userSignIn, [name] : value})
+  function handleSubmit (e){
+    e.preventDefault()
+    dispatch(toggleUserWarning(false))
+    dispatch(userLogin({ email, password }))
+  }
+   
+  useEffect(() => {
+    if(userData!==''){
+      localStorage.setItem('user', userData)
+      history.push('/welcome')  
     }
+  })
 
     return(
       <div className="App">
           <LoginForm
-            email={userSignIn.email}
-            password={userSignIn.password}
+            email={email}
+            password={password}
             handleSubmit={handleSubmit}
             handleChange={handleChange}
           />
-          {showUserWarning && <h2>Wrong email or password, please try again</h2>}
+          {userWarning && <p>Wrong email or password, please try again</p>}
       </div>
     )
 }

@@ -1,63 +1,62 @@
 import RegistrationForm from '../../components/RegistrationForm'
-import { useState } from 'react'
-import { useHistory } from "react-router-dom"
-import axios from 'axios'
+import { useEffect} from 'react'
+import { useHistory } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { userSignup, updateUserData, toggleUserWarning, togglePasswordWarning } from '../../store/userReducer'
+
 function Signup(){
-    const [userSignUp, setUserSignUp] = useState({ email : '', password : '', confirmedPassword: ''})
+  const { email, password, confirmedPassword, userWarning, passwordWarning, userData } = useSelector (
+    ({ userReducer })=>({
+    email: userReducer.email,
+    password: userReducer.password,
+    confirmedPassword: userReducer.confirmedPassword,
+    userWarning: userReducer.userWarning,
+    passwordWarning: userReducer.passwordWarning,
+    userData: userReducer.userData,
+  }))
+  const dispatch = useDispatch()
+  const history = useHistory()
 
-    const [showPasswordWarning, setShowPasswordWarning] = useState(false)
-    const [showUserWarning, setShowUserWarning] = useState(false)
+  function handleChange(e) {
+    const { name, value } = e.target
+    const data = { name, value }
+    dispatch(updateUserData(data))
+  }
 
-    const SIGNUP_ENDPOINT=process.env.REACT_APP_SERVER_URL+'/users/signup'
+  function handleSubmit (e){
+    e.preventDefault()
+    dispatch(toggleUserWarning(false))
+    dispatch(togglePasswordWarning(false))
+    if(password === confirmedPassword){
+      dispatch(userSignup({ email, password }))
+    }else{
+      dispatch(togglePasswordWarning(true))
+      dispatch(updateUserData({ name:'password', value:'' }))
+      dispatch(updateUserData({ name:'confirmedPassword', value:'' }))
+    }
+  }
 
-    let history = useHistory()
-
-    function handleSubmit (e){
-        e.preventDefault()
-        setShowPasswordWarning(false)
-        setShowUserWarning(false)
-
-        if( userSignUp.password === userSignUp.confirmedPassword ){
-
-            const { email, password } = userSignUp
-            const user = { email, password }
+  useEffect(() => {
+    if(userData!==''){
+      localStorage.setItem('user', userData)
+      history.push('/welcome')  
+    }
+  })
+ 
+  return(
+    <div className="App">
+      <RegistrationForm
+        email={email}
+        password={password}
+        confirmedPassword={confirmedPassword}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
+      {passwordWarning && <p>Please make sure your passwords match</p>}
+      {userWarning && <p>Another user with this email already exist!</p>}
+   </div>
+  )
   
-            axios.post(SIGNUP_ENDPOINT, user)
-            .then( (res) => {
-                const { email } = res.data
-                localStorage.setItem('user', email)
-                history.push('/welcome')
-            })
-            .catch(function (error) {
-                setUserSignUp({ email : '', password : '', confirmedPassword: ''})
-                setShowUserWarning(true)
-
-            })
-        }else{
-            setShowPasswordWarning(true)
-            setUserSignUp({ email : '', password : '', confirmedPassword: ''})
-        }
-    }
-
-
-    function handleChange (e){
-        const { name, value } = e.target
-        setUserSignUp({...userSignUp, [name] : value})
-    }
-
-    return(
-     <div className="App"> 
-          <RegistrationForm
-            email={userSignUp.email}
-            password={userSignUp.password}
-            confirmedPassword={userSignUp.confirmedPassword}
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-          />
-          {showPasswordWarning && <p>Please make sure your passwords match</p>}
-          {showUserWarning && <p>Another user with this email already exist!</p>}
-      </div>
-    )
 }
 
 export default Signup
