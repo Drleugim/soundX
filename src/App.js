@@ -8,6 +8,7 @@ import Welcome from './pages/Welcome/'
 import React from 'react'
 import Login from './pages/Login/'
 import Signup from './pages/Signup/'
+import Publish from './pages/Publish'
 import './App.css';
 
 
@@ -30,6 +31,7 @@ function App() {
         <PrivateRoute exact path="/" component={Login}/>
         <PrivateRoute exact path="/signup" component={Signup}/>
         <PrivateRoute exact path="/welcome" component={Welcome}/>
+        <PrivateRoute exact path="/publish" component={Publish}/>
       </Switch>
     </Router>
   )
