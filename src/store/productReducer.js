@@ -33,7 +33,7 @@ export function productPublish(product){
       const token = localStorage.getItem('token')
       const { data } = await axios({
         method: 'POST',
-        baseURL: 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL || 'http://localhost:8000',
         url: '/products/publish',
         data: product,
         headers: {
