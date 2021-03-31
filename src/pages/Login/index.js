@@ -27,8 +27,8 @@ function Login(){
   }
    
   useEffect(() => {
-    if(userData!==''){
-      localStorage.setItem('user', userData)
+    if(userData){
+      localStorage.setItem('token', userData.token)
       history.push('/welcome')  
     }
   })

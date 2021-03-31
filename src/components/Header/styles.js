@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const StyledMain = styled.main`
+export const StyledHeader = styled.header`
     width: 100vw;
     display: flex;
     flex-direction: column;

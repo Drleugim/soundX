@@ -7,7 +7,6 @@ const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
 const TOGGLE_USER_WARNING = 'TOGGLE_USER_WARNING'
 const TOGGLE_PASSWORD_WARNING= 'TOGGLE_PASSWORD_WARNING'
 
-
 export function toggleUserWarning(value){
   return{
     type: TOGGLE_USER_WARNING,
@@ -47,7 +46,7 @@ export function userSignup(user){
           password: user.password
         }
       })
-      dispatch({ type: USER_SUCCESS, payload: data.email })
+      dispatch({ type: USER_SUCCESS, payload: data })
     }catch(error){
       dispatch({ type: USER_ERROR, payload: error })
       dispatch(toggleUserWarning(true))
@@ -70,7 +69,7 @@ export function userLogin(user) {
           password: user.password
         }
       })
-      dispatch({ type: USER_SUCCESS, payload: data.name })
+      dispatch({ type: USER_SUCCESS, payload: data })
       
     } catch(error) {
       dispatch({ type: USER_ERROR, payload: error })
@@ -87,7 +86,7 @@ const initialState ={
     confirmedPassword: '', 
     userWarning: false, 
     passwordWarning: false,
-    userData: '',
+    userData: null,
     error: null
 }
 

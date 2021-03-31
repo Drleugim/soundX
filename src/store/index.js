@@ -3,8 +3,6 @@ import { userReducer } from './userReducer'
 import { productReducer } from './productReducer'
 import thunk from 'redux-thunk'
 
-
-
 const rootReducer = combineReducers({
   userReducer,
   productReducer
