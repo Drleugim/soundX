@@ -39,7 +39,7 @@ export function userSignup(user){
     try{
       const { data } = await axios({
         method: 'POST',
-        baseURL: 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signup',
         data:{
           email: user.email,
@@ -62,7 +62,7 @@ export function userLogin(user) {
     try {
       const { data } = await axios({
         method: 'POST',
-        baseURL: 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
         data:{
           email: user.email,
