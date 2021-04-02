@@ -7,7 +7,6 @@ const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
 const TOGGLE_USER_WARNING = 'TOGGLE_USER_WARNING'
 const TOGGLE_PASSWORD_WARNING= 'TOGGLE_PASSWORD_WARNING'
 
-
 export function toggleUserWarning(value){
   return{
     type: TOGGLE_USER_WARNING,
@@ -40,14 +39,14 @@ export function userSignup(user){
     try{
       const { data } = await axios({
         method: 'POST',
-        baseURL: 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signup',
         data:{
           email: user.email,
           password: user.password
         }
       })
-      dispatch({ type: USER_SUCCESS, payload: data.email })
+      dispatch({ type: USER_SUCCESS, payload: data })
     }catch(error){
       dispatch({ type: USER_ERROR, payload: error })
       dispatch(toggleUserWarning(true))
@@ -63,14 +62,14 @@ export function userLogin(user) {
     try {
       const { data } = await axios({
         method: 'POST',
-        baseURL: 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/users/signin',
         data:{
           email: user.email,
           password: user.password
         }
       })
-      dispatch({ type: USER_SUCCESS, payload: data.name })
+      dispatch({ type: USER_SUCCESS, payload: data })
       
     } catch(error) {
       dispatch({ type: USER_ERROR, payload: error })
@@ -87,7 +86,7 @@ const initialState ={
     confirmedPassword: '', 
     userWarning: false, 
     passwordWarning: false,
-    userData: '',
+    userData: null,
     error: null
 }
 

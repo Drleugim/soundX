@@ -1,10 +1,4 @@
-import {Link} from 'react-router-dom'
-import {
-  MainStyle,
-  LogoStyle, 
-  BackgroundSection,
-  DescriptionStyle
-} from './styles'
+import { MainStyle } from './styles'
 
 function PublishProductForm({ 
   nameProduct, 
@@ -14,15 +8,11 @@ function PublishProductForm({
   image,
   handleSubmit,
   handleChange,
-  handleLogout,
   handleChangePic,}){
 
   return (
-    <BackgroundSection>
+    
       <MainStyle>
-        <LogoStyle
-          alt="SNX-Logo"
-        />
         <form onSubmit={handleSubmit}>
           <section>
             <label htmlFor="nameProduct">Name of your product: </label>
@@ -79,7 +69,7 @@ function PublishProductForm({
           <section>
               <label htmlFor="image"> Picture to upload: </label>
               {image && <img src={image} alt="picture preview" style={{width:"250px"}}/>}
-            </section>
+          </section>
           <section>
             <button
               type="submit"
@@ -87,13 +77,10 @@ function PublishProductForm({
               Publish
             </button>
           </section>
-          <section>
-            <Link onClick={handleLogout}>Logout</Link>
-          </section>
         </form>
       </MainStyle>
-    </BackgroundSection>
+   
   )
 }
 
-export default PublishProductForm;
+export default PublishProductForm; 

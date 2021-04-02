@@ -5,6 +5,8 @@ const PRODUCT_ERROR = 'PRODUCT_ERROR'
 const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA'
 const UPDATE_PICTURE_DATA = 'UPDATE_PICTURE_DATA'
 const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
+const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
+const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
 
 export function toggleProductWarning(value){
   return{
@@ -33,7 +35,7 @@ export function productPublish(product){
       const token = localStorage.getItem('token')
       const { data } = await axios({
         method: 'POST',
-        baseURL: process.env.REACT_APP_SERVER_URL || 'http://localhost:8000',
+        baseURL: process.env.REACT_APP_SERVER_URL,
         url: '/products/publish',
         data: product,
         headers: {
@@ -49,6 +51,21 @@ export function productPublish(product){
   }
 }
 
+export function getProducts() {
+  return async function(dispatch) {
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/products/buyRent'
+      })
+      dispatch({ type: GET_PRODUCT_SUCCESS, payload: data })
+    } catch(error) {
+      dispatch({ type: GET_PRODUCT_ERROR, payload: error })
+    } 
+  }
+}
+
 const initialState ={ 
     nameProduct: '', 
     buyPrice: '', 
@@ -57,7 +74,9 @@ const initialState ={
     picture: null,
     productWarning: false, 
     productData: '',
-    error: null
+    error: null,
+    products:[],
+    getProductError:null
 }
 
 export function productReducer(state = initialState, action) {
@@ -94,6 +113,16 @@ export function productReducer(state = initialState, action) {
         productData: '',
         error: action.payload,
       }
+    case GET_PRODUCT_SUCCESS:
+      return{
+        ...state,
+        products: action.payload
+      }
+    case GET_PRODUCT_ERROR:
+      return{
+        ...state,
+        getProductError: action.payload
+      }  
     default:
       return state
   }
