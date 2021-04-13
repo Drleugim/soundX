@@ -4,15 +4,19 @@ import { useHistory } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
 import { productPublish ,
   updateProductData, 
-  updatePictureData, 
+  updatePictureData,
+  cleanProduct, 
   toggleProductWarning } from '../../store/productReducer'
 
 function PublishProduct(){
-  const { nameProduct, buyPrice, rentPrice, description, picture, productWarning, productData} = useSelector (
+  const { nameProduct, buyPrice, rentPrice, quantity, brand, newUsed, description, picture, productWarning, productData} = useSelector (
     ({ productReducer })=>({
     nameProduct: productReducer.nameProduct,
     buyPrice: productReducer.buyPrice,
     rentPrice: productReducer.rentPrice,
+    quantity: productReducer.quantity,
+    brand: productReducer.brand,
+    newUsed: productReducer.newUsed,
     description: productReducer.description,
     picture: productReducer.picture,
     productWarning: productReducer.productWarning,
@@ -53,6 +57,9 @@ function PublishProduct(){
       data.append('nameProduct', nameProduct)
       data.append('buyPrice', buyPrice)
       data.append('rentPrice', rentPrice)
+      data.append('quantity', quantity)
+      data.append('brand', brand)
+      data.append('newUsed', newUsed)
       data.append('description', description)
       data.append('picture', picture[0], picture[0].name)
       dispatch(productPublish(data))
@@ -64,7 +71,8 @@ function PublishProduct(){
 
   useEffect(() => {
     if(productData!=='' && picture!==null){
-      history.push('/welcome')  
+      history.push('/welcome') 
+      dispatch(cleanProduct()) 
     }
   })
 
@@ -74,6 +82,9 @@ function PublishProduct(){
         nameProduct={nameProduct}
         buyPrice={buyPrice}
         rentPrice={rentPrice}
+        quantity={quantity}
+        brand={brand}
+        newUsed={newUsed}
         description={description}
         picture={picture}
         image={image}

@@ -33,6 +33,12 @@ export const MainStyle = styled.main`
     & form section label[for=rentPrice]{
         margin-right: 92px;
     }
+    & form section label[for=quantity]{
+      margin-right: 99px;
+    }
+    & form section label[for=brand]{
+      margin-right: 118px;
+    }
     & form section input[name=description]{
       width: 100%;
       height: 150px;
