@@ -3,15 +3,17 @@ import { MainStyle } from './styles'
 function PublishProductForm({ 
   nameProduct, 
   buyPrice, 
-  rentPrice, 
-  description, 
+  rentPrice,
+  quantity,
+  brand, 
+  description,
+  newUsed, 
   image,
   handleSubmit,
   handleChange,
   handleChangePic,}){
 
   return (
-    
       <MainStyle>
         <form onSubmit={handleSubmit}>
           <section>
@@ -43,6 +45,40 @@ function PublishProductForm({
               value={rentPrice}
               onChange={handleChange}
             />
+          </section>
+          <section>
+            <label htmlFor="quantity">Quantity: </label>
+            <input
+              type="number"
+              id="quantity"
+              name="quantity"
+              value={quantity}
+              onChange={handleChange}
+            />
+          </section>
+          <section>
+            <label htmlFor="brand">Brand: </label>
+            <input
+              type="text"
+              id="brand"
+              name="brand"
+              value={brand}
+              onChange={handleChange}
+            />
+          </section>
+          <label htmlFor="newUsed">
+              Is it new or used:
+          </label>
+          <section>
+            <select 
+            name="newUsed" 
+            id="newUsed" 
+            value={newUsed}
+            onChange={handleChange}
+            >
+              <option value="new">New</option>
+              <option value="used">Used</option>
+            </select>
           </section>
           <section>
             <label htmlFor="description" placeholder="Write something...">
@@ -79,7 +115,6 @@ function PublishProductForm({
           </section>
         </form>
       </MainStyle>
-   
   )
 }
 

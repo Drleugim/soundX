@@ -4,6 +4,7 @@ const PRODUCT_SUCCESS = 'PRODUCT_SUCCESS'
 const PRODUCT_ERROR = 'PRODUCT_ERROR'
 const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA'
 const UPDATE_PICTURE_DATA = 'UPDATE_PICTURE_DATA'
+const CLEAN_PRODUCT_DATA = 'CLEAN_PRODUCT_DATA'
 const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
 const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
 const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
@@ -12,6 +13,12 @@ export function toggleProductWarning(value){
   return{
     type: TOGGLE_PRODUCT_WARNING,
     payload: value
+  }
+}
+
+export function cleanProduct(){
+  return{
+    type: CLEAN_PRODUCT_DATA,
   }
 }
 
@@ -70,7 +77,10 @@ const initialState ={
     nameProduct: '', 
     buyPrice: '', 
     rentPrice: '',
+    quantity: '',
+    brand: '',
     description: '',
+    newUsed:'',
     picture: null,
     productWarning: false, 
     productData: '',
@@ -107,11 +117,28 @@ export function productReducer(state = initialState, action) {
         nameProduct: '', 
         buyPrice: '', 
         rentPrice: '',
+        quantity: '',
+        brand: '',
+        newUsed:'',
         description: '',
         picture: null,
         productWarning: false, 
         productData: '',
         error: action.payload,
+      }
+    case CLEAN_PRODUCT_DATA:
+      return {
+        ...state,
+        nameProduct: '', 
+        buyPrice: '', 
+        rentPrice: '',
+        quantity: '',
+        brand: '',
+        newUsed:'',
+        description: '',
+        picture: null,
+        productWarning: false, 
+        productData: '',
       }
     case GET_PRODUCT_SUCCESS:
       return{
