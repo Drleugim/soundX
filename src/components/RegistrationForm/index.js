@@ -47,6 +47,7 @@ function RegistrationForm({ email, password, confirmedPassword, handleSubmit, ha
           <section>
             <button
               type="submit"
+              data-testid="signUpButton"
             >
               Register
             </button>

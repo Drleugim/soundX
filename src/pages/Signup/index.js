@@ -52,8 +52,8 @@ function Signup(){
         handleSubmit={handleSubmit}
         handleChange={handleChange}
       />
-      {passwordWarning && <p>Please make sure your passwords match</p>}
-      {userWarning && <p>Another user with this email already exist!</p>}
+      {passwordWarning && <p data-testid="passwordWarning">Please make sure your passwords match</p>}
+      {userWarning && <p data-testid="signUpUserWarning">Another user with this email already exist!</p>}
    </div>
   )
   

@@ -37,6 +37,7 @@ function LoginForm({ email, password, handleSubmit, handleChange }){
 					<section>
 						<button
 							type="submit"
+							data-testid="signInButton"
 						>
 							Sign In
 						</button>

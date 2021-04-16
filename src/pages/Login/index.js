@@ -41,7 +41,7 @@ function Login(){
             handleSubmit={handleSubmit}
             handleChange={handleChange}
           />
-          {userWarning && <p>Wrong email or password, please try again</p>}
+          {userWarning && <p data-testid="userWarning">Wrong email or password, please try again</p>}
       </div>
     )
 }
