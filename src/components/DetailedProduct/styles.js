@@ -5,7 +5,7 @@ import noImgageAvailable from './../../media/no-image-available.png'
 
 export const StyledArticle = styled.article`
     width: 15rem;
-    height: 23rem;
+    height: 24rem;
     margin-top: 2rem;
     margin-right: 2rem;
     background-color: #FCFCFE;
@@ -17,7 +17,7 @@ export const StyledArticle = styled.article`
     flex-direction: column;
     align-items: center;
 
-    p{
+    name{
         font-weight: 700; 
         font-size: 1.5rem;
     }
@@ -25,7 +25,7 @@ export const StyledArticle = styled.article`
         font-weight: normal; 
         font-size: 1rem;
         color: dimgray;
-        margin-top: -1rem;
+        margin-top: -1.2rem;
     }
 `
 
@@ -58,12 +58,13 @@ export const StyledNav = styled.nav`
     display: flex;
     justify-content: space-around;
 `
+
 export const StyledBuyRent = styled(Link)`
     text-decoration: none;
     text-align: center;
     font-weight: 700;
     color: whitesmoke;
-    width: 6rem;
+    width: 10rem;
     height: 1.5rem;
     padding-top: 0.5rem;
     margin-bottom: 0.5rem;
