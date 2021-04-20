@@ -1,13 +1,13 @@
 import axios from 'axios'
 
-const PRODUCT_SUCCESS = 'PRODUCT_SUCCESS'
-const PRODUCT_ERROR = 'PRODUCT_ERROR'
-const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA'
-const UPDATE_PICTURE_DATA = 'UPDATE_PICTURE_DATA'
-const CLEAN_PRODUCT_DATA = 'CLEAN_PRODUCT_DATA'
-const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
-const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
-const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
+export const PRODUCT_SUCCESS = 'PRODUCT_SUCCESS'
+export const PRODUCT_ERROR = 'PRODUCT_ERROR'
+export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA'
+export const UPDATE_PICTURE_DATA = 'UPDATE_PICTURE_DATA'
+export const CLEAN_PRODUCT_DATA = 'CLEAN_PRODUCT_DATA'
+export const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
+export const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
+export const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
 
 export function toggleProductWarning(value){
   return{
@@ -104,7 +104,7 @@ export function productReducer(state = initialState, action) {
     case TOGGLE_PRODUCT_WARNING:
         return{
           ...state,
-          userWarning: action.payload
+          productWarning: action.payload
         }
     case PRODUCT_SUCCESS:
       return {
