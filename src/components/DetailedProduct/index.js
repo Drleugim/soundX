@@ -36,7 +36,7 @@ function DetailedProduct() {
       <StyledArticle>
       <StyledUserLink to="#">
           <StyledUserIcon/>
-           {/* {user.email} */}
+           {!!user && user.email}
       </StyledUserLink>
       <name>{nameProduct}</name>
       <StyledImage Img={picture}/>
