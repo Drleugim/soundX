@@ -7,6 +7,7 @@ export const UPDATE_PICTURE_DATA = 'UPDATE_PICTURE_DATA'
 export const CLEAN_PRODUCT_DATA = 'CLEAN_PRODUCT_DATA'
 export const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
 export const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
+export const GET_SINGLE_PRODUCT_SUCCESS = 'GET_SINGLE_PRODUCT_SUCCESS'
 export const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
 
 export function toggleProductWarning(value){
@@ -73,6 +74,21 @@ export function getProducts() {
   }
 }
 
+export function getProduct(id) {
+  return async function(dispatch) {
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/products/buyRent/${id}`
+      })
+      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: data })
+    } catch(error) {
+      dispatch({ type: GET_PRODUCT_ERROR, payload: error })
+    } 
+  }
+}
+
 const initialState ={ 
     nameProduct: '', 
     buyPrice: '', 
@@ -86,6 +102,7 @@ const initialState ={
     productData: '',
     error: null,
     products:[],
+    product: {},
     getProductError:null
 }
 
@@ -145,6 +162,11 @@ export function productReducer(state = initialState, action) {
         ...state,
         products: action.payload
       }
+    case GET_SINGLE_PRODUCT_SUCCESS:
+    return{
+      ...state,
+      product: action.payload
+    }
     case GET_PRODUCT_ERROR:
       return{
         ...state,

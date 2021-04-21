@@ -6,19 +6,20 @@ import {
     StyledBuyRent,
     StyledNav} from './styles'
 
-function Product({name, buyPrice, rentPrice, brand, user, picture}) {
+function Product({name, buyPrice, rentPrice, brand, user, picture, id}) {
     return(
         <StyledArticle >
             <StyledUserLink to="#">
                 <StyledUserIcon/>
-                {user.name}
+                {user.email}
             </StyledUserLink>
             <StyledImage Img={picture}/>
             <p>{name}</p>
             <p>{brand}</p>
+            <p>Buy: ${buyPrice}</p>
+            <p>Rent: ${rentPrice}</p>
             <StyledNav>
-                <StyledBuyRent to="#">Buy for: {buyPrice}</StyledBuyRent>
-                <StyledBuyRent to="#">Rent for: {rentPrice}</StyledBuyRent>
+                <StyledBuyRent to={`/product/${id}`}>View </StyledBuyRent>
             </StyledNav>
         </StyledArticle >
     )

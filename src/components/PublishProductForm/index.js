@@ -76,6 +76,7 @@ function PublishProductForm({
             value={newUsed}
             onChange={handleChange}
             >
+              <option value="state">State</option>
               <option value="new">New</option>
               <option value="used">Used</option>
             </select>
