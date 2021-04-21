@@ -23,8 +23,6 @@ function DetailedProduct() {
       user,
     } = useSelector(({productReducer}) =>  productReducer.product )   
     const dispatch = useDispatch()
-    
-    console.log(user)
 
     const { id } = useParams()
 
