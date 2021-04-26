@@ -8,6 +8,7 @@ function PublishProductForm({
   brand, 
   description,
   newUsed, 
+  status,
   image,
   handleSubmit,
   handleChange,
@@ -79,6 +80,18 @@ function PublishProductForm({
               <option value="state">State</option>
               <option value="new">New</option>
               <option value="used">Used</option>
+            </select>
+          </section>
+          <section>
+            <select 
+            name="status" 
+            id="status" 
+            value={status}
+            onChange={handleChange}
+            >
+              <option value="sell">For Sale</option>
+              <option value="rent">For Rent</option>
+              <option value="sellAndRent">For Sale and Rent</option>
             </select>
           </section>
           <section>

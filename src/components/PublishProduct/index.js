@@ -9,7 +9,7 @@ import { productPublish ,
   toggleProductWarning } from '../../store/productReducer'
 
 function PublishProduct(){
-  const { nameProduct, buyPrice, rentPrice, quantity, brand, newUsed, description, picture, productWarning, productData} = useSelector (
+  const { nameProduct, buyPrice, rentPrice, quantity, brand, newUsed, description, picture, productWarning, productData, status} = useSelector (
     ({ productReducer })=>({
     nameProduct: productReducer.nameProduct,
     buyPrice: productReducer.buyPrice,
@@ -17,6 +17,7 @@ function PublishProduct(){
     quantity: productReducer.quantity,
     brand: productReducer.brand,
     newUsed: productReducer.newUsed,
+    status: productReducer.status,
     description: productReducer.description,
     picture: productReducer.picture,
     productWarning: productReducer.productWarning,
@@ -60,6 +61,7 @@ function PublishProduct(){
       data.append('quantity', quantity)
       data.append('brand', brand)
       data.append('newUsed', newUsed)
+      data.append('status', status)
       data.append('description', description)
       data.append('picture', picture[0], picture[0].name)
       dispatch(productPublish(data))
@@ -85,6 +87,7 @@ function PublishProduct(){
         quantity={quantity}
         brand={brand}
         newUsed={newUsed}
+        status={status}
         description={description}
         picture={picture}
         image={image}
