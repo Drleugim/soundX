@@ -14,20 +14,6 @@ export const StyledArticle = styled.article`
   border-radius: 0.25rem;
   border-color: #f4f4f4;
   display: flex;
-  // align-content: space-around; 
-  // flex-direction: column;
-  // align-items: center;
-
-  // name{
-  //   font-weight: 700; 
-  //   font-size: 1.5rem;
-  // }
-  // p+p{
-  //   font-weight: normal; 
-  //   font-size: 1rem;
-  //   color: dimgray;
-  //   margin-top: -1.2rem;
-  // }
 `
 export const StyledSectionPic = styled.section`
   display: flex;
