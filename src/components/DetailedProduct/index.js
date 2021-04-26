@@ -1,9 +1,10 @@
 import { 
   StyledArticle,
+  StyledSectionPic,
+  StyledSectionDes,
   StyledImage, 
   StyledUserIcon,
   StyledUserLink,
-  StyledDes,
   StyledBuyRent,
   StyledNav} from './styles'
 import { useParams } from "react-router-dom"
@@ -32,20 +33,24 @@ function DetailedProduct() {
 
     return(
       <StyledArticle>
-      <StyledUserLink to="#">
+      <StyledSectionPic>
+        <StyledUserLink to="#">
           <StyledUserIcon/>
-           {!!user && user.email}
-      </StyledUserLink>
-      <name>{nameProduct}</name>
-      <StyledImage Img={picture}/>
-      <pp>Brand: {brand}</pp>
-      <pp>Available: {quantity}</pp>
-      <des>{description}</des>
-      <StyledNav>
+            {!!user && user.email}
+        </StyledUserLink>
+        <p>{nameProduct}</p>
+        <StyledImage Img={picture}/>
+      </StyledSectionPic>
+      <StyledSectionDes>
+        <p>Brand: {brand}</p>
+        <p>Available: {quantity}</p>
+        <p>{description}</p>
+        <StyledNav>
           <StyledBuyRent to="#">Buy for: {buyPrice}</StyledBuyRent>
           <StyledBuyRent to="#">Rent for: {rentPrice}</StyledBuyRent>
-      </StyledNav>
-  </StyledArticle >
+        </StyledNav>
+      </StyledSectionDes>
+    </StyledArticle >
     )
 }
 
