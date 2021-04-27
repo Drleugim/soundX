@@ -1,20 +1,31 @@
-import { StyledSection } from './styles'
+import { 
+    StyledSection,
+    StyledMainSection
+ } from './styles'
 import Product from './../Product'
+import Filter from './../Filter'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getProducts } from './../../store/productReducer'
 
 function Products() {
-    const { products } = useSelector(({productReducer}) => ({products: productReducer.products}))                   
+    const { products, productsFiltered } = useSelector(({productReducer}) => ({
+        products: productReducer.products,
+        productsFiltered: productReducer.productsFiltered
+    }))                   
     const dispatch = useDispatch()
-
+    const productsToDisplay = productsFiltered.length>0 ? productsFiltered : products
+   
     useEffect(()=>{
-        dispatch(getProducts())
+       dispatch(getProducts())
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return(
-        <StyledSection>
-            {!!products && products.length > 0 ? products.map(({
+        <StyledMainSection>
+            <Filter/>
+            <StyledSection>
+           {!!productsToDisplay && productsToDisplay.length > 0 ? productsToDisplay.map(({
                 _id,
                 nameProduct,
                 buyPrice,
@@ -24,24 +35,24 @@ function Products() {
                 user,
                 picture,
                 }) => {
-                return(
-                    <Product
-                        key={_id}
-                        id={_id}
-                        name={nameProduct}
-                        buyPrice={buyPrice}
-                        rentPrice={rentPrice}
-                        description={description}
-                        brand={brand}
-                        user={user}
-                        picture={picture}
-                    />
-                )
-                }): (
-                    <p>No existen productos</p>
-                )
+                    return(
+                        <Product
+                            key={_id}
+                            id={_id}
+                            name={nameProduct}
+                            buyPrice={buyPrice}
+                            rentPrice={rentPrice}
+                            description={description}
+                            brand={brand}
+                            user={user}
+                            picture={picture}
+                        />
+                    )
+                }): (<p>No existen productos</p>)
             }
-        </StyledSection>
+            </StyledSection>
+        </StyledMainSection>
+        
     )
 }
 

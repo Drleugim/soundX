@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+export const CLEAR_FILTER = 'CLEAR_FILTER'
+export const APPLY_FILTER = 'APPLY_FILTERS'
 export const PRODUCT_SUCCESS = 'PRODUCT_SUCCESS'
 export const PRODUCT_ERROR = 'PRODUCT_ERROR'
 export const UPDATE_PRODUCT_DATA = 'UPDATE_PRODUCT_DATA'
@@ -9,6 +11,19 @@ export const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
 export const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
 export const GET_SINGLE_PRODUCT_SUCCESS = 'GET_SINGLE_PRODUCT_SUCCESS'
 export const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
+
+export function clearFilter(){
+  return{
+    type: CLEAR_FILTER
+  }
+}
+
+export function applyFilter(value){
+  return{
+    type: APPLY_FILTER,
+    payload: value
+  }
+}
 
 export function toggleProductWarning(value){
   return{
@@ -97,11 +112,13 @@ const initialState ={
     brand: '',
     description: '',
     newUsed:'',
+    status: 'sell',
     picture: null,
     productWarning: false, 
     productData: '',
     error: null,
     products:[],
+    productsFiltered:[],
     product: {},
     getProductError:null
 }
@@ -172,6 +189,71 @@ export function productReducer(state = initialState, action) {
         ...state,
         getProductError: action.payload
       }  
+      case APPLY_FILTER:
+      let {condition, status, minPrice, maxPrice} = action.payload
+      function reduceProducts (product){
+        if(status===''){
+          if(condition==='newAndUsed'){
+            if(minPrice<=product.rentPrice && product.rentPrice<=maxPrice && minPrice<=product.buyPrice && product.buyPrice<=maxPrice){
+                console.log('entro')
+                return true
+            }else{
+              return false
+            }
+          }else{
+            if(product.newUsed === condition){
+              if(minPrice<=product.rentPrice && product.rentPrice<=maxPrice && minPrice<=product.buyPrice && product.buyPrice<=maxPrice){
+                console.log('entro')
+                return true
+              }else{
+                return false
+              }
+            }else{
+              return false
+            }
+          }
+        }
+        else{
+          if(condition==='newAndUsed'){
+            if (product.status === status || product.status === 'sellAndRent'){
+              if(status==='sell' && minPrice<=product.buyPrice && product.buyPrice<=maxPrice){
+                return true
+              }else if(status==='rent' && minPrice<=product.rentPrice && product.rentPrice<=maxPrice){
+                return true
+              }else{
+                return false
+              }
+            }else{
+              return false
+            }
+          }else{
+            if(product.newUsed === condition){
+              if(product.status === status || product.status === 'sellAndRent'){
+                if(status==='sell' && minPrice<=product.buyPrice && product.buyPrice<=maxPrice){
+                  return true
+                }else if(status==='rent' && minPrice<=product.rentPrice && product.rentPrice<=maxPrice){
+                  return true
+                }else{
+                  return false
+                }
+              }else{
+                return false
+              }
+            }else{
+              return false
+            }  
+          }
+        }
+      }
+      return{
+        ...state,
+        productsFiltered: state.products.filter(reduceProducts)
+      } 
+    case CLEAR_FILTER:
+      return{
+        ...state,
+        productsFiltered: []
+      } 
     default:
       return state
   }
