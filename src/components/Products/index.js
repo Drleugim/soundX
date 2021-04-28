@@ -34,6 +34,8 @@ function Products() {
                 description,
                 user,
                 picture,
+                status,
+                newUsed
                 }) => {
                     return(
                         <Product
@@ -46,6 +48,8 @@ function Products() {
                             brand={brand}
                             user={user}
                             picture={picture}
+                            status={status}
+                            condition={newUsed}
                         />
                     )
                 }): (<p>No existen productos</p>)
