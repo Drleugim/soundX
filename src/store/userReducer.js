@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+export const GET_USER_DATA = 'GET_USER_DATA'
 export const USER_SUCCESS = 'USER_SUCCESS'
 export const USER_ERROR = 'USER_ERROR'
 export const USER_LOGOUT = 'USER_LOGOUT'
@@ -80,6 +81,26 @@ export function userLogin(user) {
   }
 }
 
+export function userInfo() {
+  return async function(dispatch) {
+    try {
+      const token = localStorage.getItem('token')
+      const { data } = await axios({
+        method: 'GET',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: '/users/userData',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      dispatch({ type: GET_USER_DATA, payload: data })
+      
+    } catch(error) {
+      dispatch({ type: USER_ERROR, payload: error })
+    } 
+  }
+}
+
 const initialState ={ 
     email: '', 
     password: '', 
@@ -87,7 +108,8 @@ const initialState ={
     userWarning: false, 
     passwordWarning: false,
     userData: null,
-    error: null
+    error: null,
+    userInfo: null
 }
 
 export function userReducer(state = initialState, action) {
@@ -124,6 +146,11 @@ export function userReducer(state = initialState, action) {
         password: '', 
         confirmedPassword: '',
         userData:''
+      }
+    case GET_USER_DATA:
+      return {
+        ...state,
+        userInfo: action.payload.name ? action.payload.name : action.payload.email,
       }
     default:
       return state

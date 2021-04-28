@@ -1,6 +1,11 @@
+import {
+  StyledMain,
+  StyledUserWarning,
+  StyledSection
+} from './styles'
 import LoginForm from '../../components/LoginForm'
 import { useEffect } from 'react'
-import { useHistory } from "react-router-dom"
+import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import { userLogin, updateUserData, toggleUserWarning } from '../../store/userReducer'
 
@@ -33,17 +38,23 @@ function Login(){
     }
   })
 
-    return(
-      <div className="App">
-          <LoginForm
-            email={email}
-            password={password}
-            handleSubmit={handleSubmit}
-            handleChange={handleChange}
-          />
-          {userWarning && <p data-testid="userWarning">Wrong email or password, please try again</p>}
-      </div>
-    )
+  return(
+    <StyledMain>
+      <LoginForm
+        email={email}
+        password={password}
+        handleSubmit={handleSubmit}
+        handleChange={handleChange}
+      />
+      {
+        userWarning && 
+        <StyledSection>
+          <StyledUserWarning/>
+          <p data-testid="userWarning">Wrong email or password, please try again</p>
+        </StyledSection>
+      }
+    </StyledMain>
+  )
 }
 
 export default Login

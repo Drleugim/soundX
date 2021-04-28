@@ -3,29 +3,33 @@ import { Link } from 'react-router-dom'
 import emptyCart from './../../media/shopping-cart-empty.png'
 
 export const StyledNav = styled.nav`
-    width: 15rem;
+    width: 23rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-end;
     position: absolute;
-    margin-left: 50rem;
-    margin-top: 5rem;
+    margin-left: 48rem;
+    margin-top: 6rem;
 `
 export const StyledLink = styled(Link)`
     text-decoration: none;
     color: dimgray;
     border-right-style: solid;
     border-right-width: 0.1rem;
-    padding-right: 1.5rem;
-
+    padding-right:0.5rem;
+    padding-left: 0.5rem;
+   
     &:hover{
         color: limegreen;
     }
 
-    &:last-child{
-        border-right-style: none;
+    &:first-child{
         background-image: url(${emptyCart});
         background-size: 1.2rem;
         background-repeat: no-repeat;
         background-position: center;
+        padding-right: 1.5rem;
+    }
+    &:last-child{
+        border-right-style: none;
     }
 `
