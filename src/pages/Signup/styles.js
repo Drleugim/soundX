@@ -19,7 +19,7 @@ export const StyledMain = styled.main`
     }
 
 `
-export const StyledUserWarning = styled.img.attrs(props => ({
+export const StyledWarning = styled.img.attrs(props => ({
     src: props.Img || userWarningIcon,
   }))`
     width: 2rem;
@@ -37,5 +37,4 @@ export const StyledSection = styled.section`
     border: 2px solid tomato;
     border-radius: 10px;
     box-shadow: 5px 5px tomato;
-
 `
