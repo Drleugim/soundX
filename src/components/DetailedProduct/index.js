@@ -36,7 +36,7 @@ function DetailedProduct() {
       <StyledSectionPic>
         <StyledUserLink to="#">
           <StyledUserIcon/>
-            {!!user && user.email}
+            {!!user && user.name ? user.name : user.email}
         </StyledUserLink>
         <p>{nameProduct}</p>
         <StyledImage Img={picture}/>

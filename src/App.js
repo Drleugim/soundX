@@ -7,8 +7,9 @@ import {
 import Welcome from './pages/Welcome/'
 import Login from './pages/Login/'
 import Signup from './pages/Signup/'
-import DetailedProduct from './pages/Product'
+import Product from './pages/Product'
 import Publish from './pages/Publish'
+import EditProfile from './pages/EditProfile'
 import React from 'react'
 import './App.css';
 
@@ -33,7 +34,8 @@ function App() {
         <PrivateRoute exact path="/signup" component={Signup}/>
         <PrivateRoute exact path="/welcome" component={Welcome}/>
         <PrivateRoute exact path="/publish" component={Publish}/>
-        <PrivateRoute exact path="/product/:id" component={DetailedProduct}/>
+        <PrivateRoute exact path="/product/:id" component={Product}/>
+        <PrivateRoute exact path="/editProfile/:id" component={EditProfile}/>
       </Switch>
     </Router>
   )

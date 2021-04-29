@@ -1,14 +1,14 @@
 import { StyledMain } from './styles'
 import Header from './../../components/Header'
-import DetailedProduct from './../../components/DetailedProduct'
+import EditUser from './../../components/EditUser'
 
-function Product(){
+function EditProfile(){
     return(
         <StyledMain>
             <Header/>
-            <DetailedProduct/>
+            <EditUser/>
         </StyledMain>
     )
 }
      
-export default Product
+export default EditProfile
