@@ -58,6 +58,30 @@ export function userSignup(user){
   }
 }
 
+export function userDataUpdate(id, user){
+  return async function(dispatch){
+    try{
+      const token = localStorage.getItem('token')
+      const { data } = await axios({
+        method: 'POST',
+        baseURL: process.env.REACT_APP_SERVER_URL,
+        url: `/users/editUser/${id}`,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        data:{
+          name: user.userName,
+        }
+      })
+      dispatch({ type: USER_SUCCESS, payload: data })
+    }catch(error){
+      dispatch({ type: USER_ERROR, payload: error })
+      dispatch(toggleUserWarning(true))
+      dispatch(updateUserData({userName:'name',value:''}))
+    }
+  }
+}
+
 export function userLogin(user) {
   return async function(dispatch) {
     try {
@@ -103,13 +127,14 @@ export function userInfo() {
 
 const initialState ={ 
     email: '', 
-    password: '', 
+    password: '',
+    userName:'', 
     confirmedPassword: '', 
     userWarning: false, 
     passwordWarning: false,
     userData: null,
     error: null,
-    userInfo: null
+    userInfo: {}
 }
 
 export function userReducer(state = initialState, action) {
@@ -150,7 +175,7 @@ export function userReducer(state = initialState, action) {
     case GET_USER_DATA:
       return {
         ...state,
-        userInfo: action.payload.name ? action.payload.name : action.payload.email,
+        userInfo: action.payload,
       }
     default:
       return state
