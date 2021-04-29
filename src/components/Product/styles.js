@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import userIcon from './../../media/user.png'
+import newIcon from './../../media/new-icon.png'
 import noImgageAvailable from './../../media/no-image-available.png'
+import rentTag from './../../media/rent-tag.png'
+import saleTag from './../../media/sale-tag.png'
+import saleAndRentTag from './../../media/sale-and-rent-tag.png'
 
 export const StyledArticle = styled.article`
     width: 15rem;
-    height: 18rem;
+    height: 23rem;
     margin-top: 2rem;
     margin-right: 2rem;
     background-color: #FCFCFE;
@@ -68,5 +72,24 @@ export const StyledUserIcon = styled.img.attrs(props => ({
 export const StyledImage = styled.img.attrs(props => ({
     src: props.Img || noImgageAvailable,
   }))`
+   width: 13rem;
+   height: 13rem;
    margin-top: 0.5rem;
+   margin-bottom: 1rem;
+`
+export const StyledStatusTag = styled.img.attrs(props => ({
+   src: props.status==='sell' ? saleTag : (props.status==='rent' ? rentTag : saleAndRentTag),
+  })
+  )`
+    width: 3rem;
+    height: 3rem;
+    align-self: flex-end;
+    margin-top: -1.7rem;
+`
+export const StyledNewIcon = styled.img.attrs(props => ({
+    src: props.Img || newIcon,
+  }))`
+   width: 2rem;
+   height: 2rem;
+   margin-top: -1.7rem;
 `
