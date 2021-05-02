@@ -24,11 +24,12 @@ function UserNavBar() {
 
   useEffect(()=>{
     dispatch(userInfo())
+    // eslint-disable-next-line react-hooks/exhaustive-deps
  }, [])
 
   return(
     <StyledNav>
-      <StyledLink to="#"/>
+      <StyledLink to="/cart"/>
       <StyledLink to="#" onClick={handleLogout} data-testid="logout">Logout</StyledLink>
       <DropDown>
         <StyledLinkUser to="#">Hello {name ? name:email}</StyledLinkUser>
