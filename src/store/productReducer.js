@@ -11,6 +11,12 @@ export const TOGGLE_PRODUCT_WARNING = 'TOGGLE_PRODUCT_WARNING'
 export const GET_PRODUCT_SUCCESS = 'GET_PRODUCT_SUCCESS'
 export const GET_SINGLE_PRODUCT_SUCCESS = 'GET_SINGLE_PRODUCT_SUCCESS'
 export const GET_PRODUCT_ERROR = 'GET_PRODUCT_ERROR'
+export const ADDED_TO_CART = 'ADDED_TO_CART'
+export const REMOVED_FROM_CART = 'REMOVED_FROM_CART'
+export const GOT_CART_SUCCESSFULLY = 'GOT_CART_SUCCESSFULLY'
+export const GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY = 'GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY'
+export const CART_ERROR = 'CART_ERROR'
+export const CART_SOLD_SUCCESSFULLY = 'CART_SOLD_SUCCESSFULLY'
 
 export function clearFilter(){
   return{
@@ -89,7 +95,7 @@ export function getProducts() {
   }
 }
 
-export function getProduct(id) {
+export function getProduct(id, qty) {
   return async function(dispatch) {
     try {
       const { data } = await axios({
@@ -97,10 +103,143 @@ export function getProduct(id) {
         baseURL: process.env.REACT_APP_SERVER_URL,
         url: `/products/buyRent/${id}`
       })
-      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: data })
+      dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: {data, qty} })
     } catch(error) {
       dispatch({ type: GET_PRODUCT_ERROR, payload: error })
     } 
+  }
+}
+
+export function addToCart(product_id){
+  return async function(dispatch){
+    try{
+        const token = localStorage.getItem('token')
+        const { data } = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/carts/add',
+            data:{product_id},
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        await dispatch({ type: ADDED_TO_CART, payload: data })
+        await dispatch(getCartWithProductDetails())
+    }catch(error){
+      dispatch({ type: CART_ERROR, payload: error })
+    }
+  }
+}
+
+export function decreaseProductQuantity(product_id){
+  return async function(dispatch){
+    try{
+        const token = localStorage.getItem('token')
+        await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/carts/decreaseQty',
+            data:{product_id},
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        await dispatch(getCartWithProductDetails())
+    }catch(error){
+      dispatch({ type: CART_ERROR, payload: error })
+    }
+  }
+}
+
+export function removeFromCart(product_id){
+  return async function(dispatch){
+    try{
+        const token = localStorage.getItem('token')
+        const { data } = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/carts/remove',
+            data:{product_id},
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        await dispatch({ type: REMOVED_FROM_CART, payload: data })
+        await dispatch(getCartWithProductDetails())
+    }catch(error){
+      dispatch({ type: CART_ERROR, payload: error })
+    }
+  }
+}
+
+export function getCart(){
+    return async function(dispatch){
+      try{
+          const token = localStorage.getItem('token')
+          const { data } = await axios({
+              method: 'GET',
+              baseURL: process.env.REACT_APP_SERVER_URL,
+              url: '/carts/getCart',
+              headers: {
+                  'Authorization': `Bearer ${token}`
+              }
+          })
+          dispatch({ type: GOT_CART_SUCCESSFULLY, payload: data })
+      }catch(error){
+        dispatch({ type: CART_ERROR, payload: error })
+      }
+    }
+}
+
+export function getCartWithProductDetails(){
+  return async function(dispatch, getState) {
+    try{
+      await dispatch(cleanProduct()) 
+      await dispatch(getCart())
+      const cart = getState().productReducer.cart
+      let detailedCart = []
+      let amount = 0
+      if(cart.length > 0){
+        for(let i=0; i<cart.length; i++){
+          if(Object.entries(getState().productReducer.product).length !== 0){
+            detailedCart.push(getState().productReducer.product)
+          }
+          await dispatch(getProduct(cart[i].product, cart[i].quantity))
+        }
+        detailedCart.push(getState().productReducer.product)
+      }
+      
+      detailedCart.forEach( product => { 
+        let value = Number(product.buyPrice) * Number(product.qty)
+        amount = amount + value
+      })
+ 
+      await dispatch({ type: GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY, payload: {detailedCart, amount} })
+
+    }catch(error){
+      dispatch({ type: CART_ERROR, payload: error })
+    }
+  }
+}
+
+export function emptyCart(){
+  return async function(dispatch){
+    try{
+        const token = localStorage.getItem('token')
+        const { data } = await axios({
+            method: 'POST',
+            baseURL: process.env.REACT_APP_SERVER_URL,
+            url: '/carts/emptyCart',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+        })
+        await dispatch({ type: CART_SOLD_SUCCESSFULLY, payload: data })
+        await dispatch(getCartWithProductDetails())
+        
+    }catch(error){
+      dispatch({ type: CART_ERROR, payload: error })
+    }
   }
 }
 
@@ -120,7 +259,14 @@ const initialState ={
     products:[],
     productsFiltered:[],
     product: {},
-    getProductError:null
+    getProductError:null,
+    productsInCart:[],
+    cart:[],
+    cartAmount: 0,
+    productAddedNotification: false,
+    productRemovedNotification: false,
+    cartSoldNotification: false,
+    cartError: null
 }
 
 export function productReducer(state = initialState, action) {
@@ -173,6 +319,7 @@ export function productReducer(state = initialState, action) {
         picture: null,
         productWarning: false, 
         productData: '',
+        product:{}
       }
     case GET_PRODUCT_SUCCESS:
       return{
@@ -180,10 +327,10 @@ export function productReducer(state = initialState, action) {
         products: action.payload
       }
     case GET_SINGLE_PRODUCT_SUCCESS:
-    return{
-      ...state,
-      product: action.payload
-    }
+      return{
+        ...state,
+        product: {...action.payload.data, qty:action.payload.qty}
+      }
     case GET_PRODUCT_ERROR:
       return{
         ...state,
@@ -254,6 +401,32 @@ export function productReducer(state = initialState, action) {
         ...state,
         productsFiltered: []
       } 
+    case ADDED_TO_CART:
+      return{
+        ...state,
+        productAddedNotification: true
+      }
+    case REMOVED_FROM_CART:
+      return{
+        ...state,
+        productRemovedNotification: true
+      }
+    case CART_SOLD_SUCCESSFULLY:
+      return{
+        ...state,
+        cartSoldNotification: true
+      } 
+    case GOT_CART_SUCCESSFULLY:
+      return{
+        ...state,
+        cart: action.payload.cart
+      }
+    case GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY:
+      return{
+        ...state,
+        productsInCart: action.payload.detailedCart,
+        cartAmount: action.payload.amount
+      }
     default:
       return state
   }

@@ -10,6 +10,8 @@ import Signup from './pages/Signup/'
 import Product from './pages/Product'
 import Publish from './pages/Publish'
 import EditProfile from './pages/EditProfile'
+import SuccessPayment from './pages/SuccessPayment'
+import Cart from './pages/Cart'
 import React from 'react'
 import './App.css';
 
@@ -36,6 +38,8 @@ function App() {
         <PrivateRoute exact path="/publish" component={Publish}/>
         <PrivateRoute exact path="/product/:id" component={Product}/>
         <PrivateRoute exact path="/editProfile/:id" component={EditProfile}/>
+        <PrivateRoute exact path="/cart"  component={Cart}/>
+        <PrivateRoute exact path="/successPayment"  component={SuccessPayment}/>
       </Switch>
     </Router>
   )

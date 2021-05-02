@@ -62,15 +62,13 @@ export const StyledNav = styled.nav`
   justify-content: space-around;
 `
 
-export const StyledBuyRent = styled(Link)`
+export const StyledBuyRent = styled.button`
   text-decoration: none;
   text-align: center;
   font-weight: 700;
   color: whitesmoke;
   width: 10rem;
   height: 1.5rem;
-  padding-top: 0.5rem;
-  margin-bottom: 0.5rem;
   margin-right: 0.5rem;
   background-color: limegreen;
   border-radius: 0.25rem;

@@ -10,7 +10,7 @@ import {
 import { useParams } from "react-router-dom"
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getProduct } from '../../store/productReducer'
+import { addToCart, getProduct } from '../../store/productReducer'
 
 function DetailedProduct() {
     const { 
@@ -27,7 +27,14 @@ function DetailedProduct() {
 
     const { id } = useParams()
 
+    const handleSubmit = e =>{
+      e.preventDefault()
+      dispatch(addToCart(id))
+    } 
+
     useEffect(()=> {
+      console.log('id: ', id)
+      console.log('id type: ', id.typeOf)
       dispatch(getProduct(id))
     }, [])
 
@@ -36,7 +43,7 @@ function DetailedProduct() {
       <StyledSectionPic>
         <StyledUserLink to="#">
           <StyledUserIcon/>
-            {!!user && user.name ? user.name : user.email}
+          {!!user && user.email}
         </StyledUserLink>
         <p>{nameProduct}</p>
         <StyledImage Img={picture}/>
@@ -46,8 +53,8 @@ function DetailedProduct() {
         <p>Available: {quantity}</p>
         <p>{description}</p>
         <StyledNav>
-          <StyledBuyRent to="#">Buy for: {buyPrice}</StyledBuyRent>
-          <StyledBuyRent to="#">Rent for: {rentPrice}</StyledBuyRent>
+          <StyledBuyRent onClick={handleSubmit}>Buy for: {buyPrice}</StyledBuyRent>
+          <StyledBuyRent onClick={handleSubmit}>Rent for: {rentPrice}</StyledBuyRent>
         </StyledNav>
       </StyledSectionDes>
     </StyledArticle >
