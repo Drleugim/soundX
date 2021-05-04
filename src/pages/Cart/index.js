@@ -1,6 +1,7 @@
 import Header from './../../components/Header'
 import ProductInCart from './../../components/ProductInCart'
 import Payment from './../../components/Payment'
+import { StyledP, StyledMain } from '../Cart/styled'
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getCartWithProductDetails} from '../../store/productReducer'
@@ -18,7 +19,7 @@ function Cart(){
     }, [])
 
     return(
-        <main>
+        <StyledMain>
             <Header/>
             {!!productsInCart && productsInCart.length > 0 ? productsInCart.map((product) => {
                     return(
@@ -31,10 +32,10 @@ function Cart(){
                             qtyInCart={product.qty}
                         /> 
                     )
-                }): (<p>Cart is empty</p>)
+                }): (<StyledP>Cart is empty</StyledP>)
             }      
             <Payment/> 
-        </main>
+        </StyledMain>
     )
 }
 

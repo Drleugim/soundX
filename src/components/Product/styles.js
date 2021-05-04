@@ -9,7 +9,7 @@ import saleAndRentTag from './../../media/sale-and-rent-tag.png'
 
 export const StyledArticle = styled.article`
     width: 15rem;
-    height: 23rem;
+    height: 26rem;
     margin-top: 2rem;
     margin-right: 2rem;
     background-color: #FCFCFE;
@@ -36,9 +36,9 @@ export const StyledArticle = styled.article`
     }
     span+span{
         align-self: flex-end;
-        margin-top: -1.20rem;
+        margin-top: -1.4rem;
         margin-right: 1.1rem;
-        padding-left: 1.5rem;
+        padding-left: 1.8rem;
         border-left: 0.1rem;
         border-left-style: solid;
     }

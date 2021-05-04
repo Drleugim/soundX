@@ -17,6 +17,8 @@ export const GOT_CART_SUCCESSFULLY = 'GOT_CART_SUCCESSFULLY'
 export const GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY = 'GOT_CART_WITH_PRODUCT_DETAILS_SUCCESSFULLY'
 export const CART_ERROR = 'CART_ERROR'
 export const CART_SOLD_SUCCESSFULLY = 'CART_SOLD_SUCCESSFULLY'
+export const PRODUCT_FINISHED = 'PRODUCT_FINISHED'
+export const PRODUCT_LOADING = 'PRODUCT_LOADING'
 
 export function clearFilter(){
   return{
@@ -97,6 +99,7 @@ export function getProducts() {
 
 export function getProduct(id, qty) {
   return async function(dispatch) {
+    dispatch({ type: PRODUCT_LOADING })
     try {
       const { data } = await axios({
         method: 'GET',
@@ -106,7 +109,9 @@ export function getProduct(id, qty) {
       dispatch({ type: GET_SINGLE_PRODUCT_SUCCESS, payload: {data, qty} })
     } catch(error) {
       dispatch({ type: GET_PRODUCT_ERROR, payload: error })
-    } 
+    } finally {
+      dispatch({ type: PRODUCT_FINISHED })
+    }
   }
 }
 
@@ -266,7 +271,8 @@ const initialState ={
     productAddedNotification: false,
     productRemovedNotification: false,
     cartSoldNotification: false,
-    cartError: null
+    cartError: null,
+    loading: false,
 }
 
 export function productReducer(state = initialState, action) {
@@ -427,6 +433,16 @@ export function productReducer(state = initialState, action) {
         productsInCart: action.payload.detailedCart,
         cartAmount: action.payload.amount
       }
+      case PRODUCT_LOADING:
+      return {
+        ...state,
+        loading: true,
+      }
+      case PRODUCT_FINISHED:
+        return {
+          ...state,
+          loading: false,
+        }
     default:
       return state
   }

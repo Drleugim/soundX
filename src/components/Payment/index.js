@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { StyledPay } from '../Payment/styles'
 import { useEffect } from 'react'
 import { useSelector} from 'react-redux'
 import { useLocation} from 'react-router-dom'
@@ -70,9 +71,9 @@ function Payment() {
 
   return (
     <div>
-      <button type="button" onClick={handlePayment}>
-        Pagar
-      </button>
+      <StyledPay type="button" onClick={handlePayment}>
+        Pay
+      </StyledPay>
     </div>
   )
 }

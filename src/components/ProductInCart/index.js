@@ -1,5 +1,11 @@
 import { useDispatch } from 'react-redux'
 import { addToCart, removeFromCart, decreaseProductQuantity} from '../../store/productReducer'
+import { 
+  StyledArticle, 
+  StyledSectionDes, 
+  StyledSectionPic, 
+  StyledUserLink, 
+  StyledSectionBut } from './styles'
 
 function ProductInCart({id, name, price, picture, qtyInCart}) {
     const dispatch = useDispatch()
@@ -20,16 +26,22 @@ function ProductInCart({id, name, price, picture, qtyInCart}) {
     } 
 
     return(
-        <article>
-            <p>product name: {name}</p>
-            <p>product id: {id}</p>
-            <p>quantity: {qtyInCart}</p>
-            <p>price: {price}</p>
+        <StyledArticle>
+          <StyledSectionPic>
             <img src={picture} alt=""/>
-            <button onClick={handleDecreaseQuantity}>quantity-1</button>
-            <button onClick={handleIncreaseQuantity}>quantity+1</button>
-            <button onClick={handleRemoveFromCart}>remove</button>
-        </article>
+          </StyledSectionPic>
+          <StyledSectionDes>
+          <p>product name: {name}</p>
+            <p>product id: {id}</p>
+            <p>price: {price}</p>
+            <p>quantity: {qtyInCart}</p>
+          </StyledSectionDes>
+          <StyledSectionBut>
+            <StyledUserLink onClick={handleIncreaseQuantity}>+</StyledUserLink>
+            <StyledUserLink onClick={handleDecreaseQuantity}>-</StyledUserLink>
+            <StyledUserLink onClick={handleRemoveFromCart}>remove</StyledUserLink>
+          </StyledSectionBut>
+        </StyledArticle>
     )
 }
 
